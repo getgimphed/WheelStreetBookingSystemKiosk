@@ -1,0 +1,93 @@
+<div class="col s6 push-s3 white z-depth-1 hoverable">
+
+  <div class="row">
+    <div class="col s12"><h5>Enter details to Book a Bike</h5></div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 line"></div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <a class="btn col s10 push-s1 dropdown {{btncolor}}"  style="text-align:center;" ng-click="getLocation()">{{locationStatus}}<i id='gps' class="material-icons right">{{gpsStatus}}</i></a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <div class="col s4 push-s1">
+        <label for="pudate1">Pickup Date <i class="material-icons col right">date_range</i></label>
+        <input id='pudate1' type="text" class="datepicker" ng-model='bookingsService.timings.pickupDate'>
+      </div>
+      <div class="col s4 push-s3">
+        <label for="dddate1">DropOff Date <i class="material-icons col right">date_range</i></label>
+        <input id='dddate1' type="text" class="datepicker" ng-model='bookingsService.timings.dropoffDate'>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+
+      <div class="col s4 push-s1 ">
+        <label for="putime">Pickup Time<i class="material-icons col right">access_time</i></label>
+        <input id="putime" class="timepicker" type="text" ng-model='bookingsService.timings.pickupTime'/>
+      </div>
+
+      <div class="col s2"><i class="col s12 push-s10 material-icons">trending_flat</i></div>
+
+      <div class="col s4 push-s1">
+        <label for="ddtime">DropOff Time <i class="material-icons col right">access_time</i></label>
+        <input id="ddtime" class="timepicker" type="text" ng-model='bookingsService.timings.dropoffTime'/>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+        <button type="submit" class="waves-effect waves-light btn col s10 push-s1"  ng-class=" ( bookingsService.lat && bookingsService.lng && bookingsService.timings.dropoffTime && bookingsService.timings.pickupTime && bookingsService.timings.pickupDate && bookingsService.timings.dropoffDate) ? '' : 'disabled'" ng-click="getBikes()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('#dddate1').pickadate({
+    // selectYears: 2, // Creates a dropdown of 2 years to control year
+    selectMonths: true, // Creates a dropdown to control month
+    min: 'today',
+    disable:[1],
+    formatSubmit: 'yyyy-mm-dd',
+    format: "yyyy-mm-dd"
+  });
+
+  $('#pudate1').pickadate({
+   selectMonths: true, // Creates a dropdown to control month
+   min: 'today',
+   formatSubmit: 'yyyy-mm-dd',
+   disable:[1],
+   format: "yyyy-mm-dd",
+   onSet: function(){
+     var $input1 = $('#pudate1').pickadate();
+     var picker1 = $input1.pickadate('picker');
+     var puvalue = picker1.get();
+     var $input = $('#dddate1').pickadate();
+     var picker = $input.pickadate('picker');
+     picker.set('min',puvalue);
+   }
+
+  });
+
+  var clock = $('.timepicker').pickatime({
+    min:[10,00],
+    max:[20,00],
+    interval:60
+  });
+  jQuery(window).blur(function() {
+        jQuery(document.activeElement).blur();
+  });
+
+});
+</script>

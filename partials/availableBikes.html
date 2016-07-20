@@ -1,0 +1,164 @@
+<div class="col s10 push-s1 white z-depth-1 hoverable">
+
+  <div class="row" style="margin-bottom: 0px; margin-top:20px;">
+    <div class="col s12">
+      <div class="col s2 ">
+        <label for="area">Area <i class="material-icons col right">near_me</i></label>
+        <input id='area' disabled type="text" class="datepicker" ng-model='address'>
+      </div>
+      <div class="col s2">
+        <label for="pudate2">Pickup Date<i class="material-icons col right">date_range</i></label>
+        <input id='pudate2' type="text" class="datepicker" value="{{timings.pickupDate}}" ng-model='timings.pickupDate'>
+      </div>
+      <div class="col s2">
+        <label for="putime">Pickup Time<i class="material-icons col right">access_time</i></label>
+        <input id="putime" class="timepicker" type="text" value="{{timings.pickupTime}}" ng-model='timings.pickupTime'/>
+      </div>
+      <div class="col s2">
+        <label for="dddate2">DropOff Date<i class="material-icons col right">date_range</i></label>
+        <input id='dddate2' type="text" class="datepicker" value="{{timings.dropoffDate}}" ng-model='timings.dropoffDate'>
+      </div>
+      <div class="col s2">
+        <label for="ddtime">DropOff Time<i class="material-icons col right">access_time</i></label>
+        <input id="ddtime" class="timepicker" type="text" value="{{timings.dropoffTime}}" ng-model='timings.dropoffTime'/>
+      </div>
+      <div class="input-field col s2">
+        <a class="btn col s12 deep-purple darken-4 " ng-click="modifySearch()">Modify</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 0px;">
+    <div class="col s12 line"></div>
+  </div>
+
+  <div class="row" style="margin-bottom: 0px;">
+    <div class="col s12 valign-wrapper">
+      <div class="col s6" style="margin-left:0%;">Showing {{ bookingsService.availableBikes.bikes.length | number }} available bikes</div>
+      <div class="col s3 right input-field">
+          <label for="search">Search Bikes <i class="material-icons">search</i></label>
+          <input id="search" style="height=1.5em" type="text" ng-model="search.bike_name"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <table class="col s12 bordered centered responsive-table">
+        <thead>
+          <tr>
+              <th data-field="bikeName"><i>Bike Name</i></th>
+              <th data-field="availablity"><i>Availablity</i></th>
+              <th data-field="deposit"><i>Location</i></th>
+              <th data-field="rentph"><i>Rent Per Hour</i></th>
+              <th data-field="deposit"><i>Deposit</i></th>
+              <th data-field="pickone"><i>Pick Your Ride</i></th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="bike in bookingsService.availableBikes.bikes | filter:search">
+          <tr ng-repeat="bikeloc in bike.location">
+            <td>{{bike.make_name}}-{{bike.bike_name}}</td>
+            <td ng-if ="bikeloc.bikes_quantity > 0" ><i class="material-icons" style="color:#00695c; font-size:24px;">motorcycle</i></td>
+            <td ng-if ="bikeloc.bikes_quantity <= 0"><i class="material-icons" style="color:#b71c1c; font-size:24px;">clear</i></td>
+            <td>{{bikeloc.location}}</td>
+            <td>{{bikeloc.bikes_rent}}</td>
+            <td>{{bikeloc.bikes_deposit}}</td>
+            <td>
+              <p>
+                <input type="radio" name="selectBike" ng-disabled=" ( bikeloc.bikes_quantity <= 0 ) " id="{{bikeloc.id}}" ng-value="bikeloc.id"/>
+                <label for="{{bikeloc.id}}" ng-click="selectMyBike(bikeloc)"></label>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <div class="col s2 right">
+        <button data-target="modalWindow" class="waves-effect waves-light btn col s12 modal-trigger" ng-click="setHours()" type="submit" >Book Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalWindow" class="modal">
+  <div ng-if="bookingsService.selectedBike" class="modal-content">
+    <h5 style="color:#757575;">Summary : Your Ride</h5>
+    <table class="striped bordered responsive-table centered">
+      <thead>
+        <tr>
+          <th>One {{bookingsService.selectedBike.bikes}}</th>
+          <th>{{bookingsService.selectedBike.bikes_rent  * setHours() }} INR Rent</th>
+          <th>{{bookingsService.selectedBike.bikes_deposit}} INR Refundable Deposit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><h6>Total to be collected : </h6></td>
+          <td></td>
+          <td><h6>{{bookingsService.selectedBike.bikes_deposit + bookingsService.selectedBike.bikes_rent * setHours() }} INR</h6></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div ng-if="!bookingsService.selectedBike" class="modal-content">
+    <h4>Select a Bike First</h4>
+  </div>
+  <div class="modal-footer">
+    <input type="submit" value="Confirm" ng-class="!bookingsService.selectedBike ? 'disabled' : '' " ng-click="modalConfirm()" class="waves-effect waves-light btn">
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+
+   var date = $('#dddate2').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    min: 'today',
+    disable:[1],
+    format: "yyyy-mm-dd",
+    onSet: function(){
+      console.log(date.pickadate("min"));
+    }
+  });
+
+  $('#pudate2').pickadate({
+   selectMonths: true, // Creates a dropdown to control month
+   min: 'today',
+   disable:[1],
+   format: "yyyy-mm-dd",
+   onSet: function(){
+     var $input1 = $('#pudate2').pickadate();
+     var picker1 = $input1.pickadate('picker');
+     var puvalue = picker1.get();
+     var $input = $('#dddate2').pickadate();
+     var picker = $input.pickadate('picker');
+     picker.set('min',puvalue);
+   }
+
+  });
+
+  var clock = $('.timepicker').pickatime({
+    min:[10,00],
+    max:[20,00],
+    interval:60
+  });
+  jQuery(window).blur(function() {
+        jQuery(document.activeElement).blur();
+  });
+
+  $('.modal-trigger').leanModal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: .5, // Opacity of modal background
+      in_duration: 200, // Transition in duration
+      out_duration: 200, // Transition out duration
+      ready: function() {  }, // Callback for Modal open
+      complete: function() { } // Callback for Modal close
+    }
+  );
+});
+</script>

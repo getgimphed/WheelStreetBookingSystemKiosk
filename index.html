@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app = 'app'>
+  <head>
+    <title>Vendor Panel for Bookings | Wheelstreet</title>
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!-- <link type="text/css" rel="stylesheet" href="css/materialize.datepicker.css"/> -->
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/amsul/pickadate.js/master/lib/themes/classic.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/amsul/pickadate.js/master/lib/themes/classic.time.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/amsul/pickadate.js/master/lib/themes/default.time.css" media="screen" title="no title" charset="utf-8">
+
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+
+    <link type="text/css" rel="stylesheet" href="https://raw.githubusercontent.com/chingyawhao/materialize-clockpicker/master/dist/css/materialize.clockpicker.css"/>
+
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/picker.js"></script>
+    <script type="text/javascript" src="js/picker.time.js"></script>
+    <!-- <script type="text/javascript" src="js/materialize.clockpicker.js"></script> -->
+
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/angular-route.js"></script>
+    <script type="text/javascript" src="js/moment.js"></script>
+
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
+  </head>
+  <body class="grey lighten-2">
+    <div class="row grey darken-4 header z-depth-1">
+      <a href="https://www.wheelstreet.in/" class="col s2" target="_blank"><div><img height="70" style="padding:10px" src="https://d2ogitr3jia7eu.cloudfront.net/assets/media/mis/ws_only_logo.png"/></div></a>
+    </div>
+
+    <div class="row" ng-view></div>
+
+  </body>
+</html>

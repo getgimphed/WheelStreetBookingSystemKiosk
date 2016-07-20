@@ -1,0 +1,87 @@
+<div class="col s6 push-s3 white z-depth-1 hoverable">
+
+  <div class="row" style="margin-bottom: 0px; margin-top:20px;">
+    <div class="col s12">
+      <div class="col s3">
+        <h6>Total Rent</h6>
+      </div>
+      <div class="col s3">
+        <h6>Total Deposit</h6>
+      </div>
+      <div class="col s6">
+        <h6>Your Ride</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 0px;">
+    <div class="col s12">
+      <div class="col s3">
+        <h5>{{selectedBike.bikes_rent  * setHours()}}</h5>
+      </div>
+      <div class="col s3">
+        <h5>{{selectedBike.bikes_deposit}}</h5>
+      </div>
+      <div class="col s6">
+        <h5>{{selectedBike.bikes}}</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 0px;">
+    <div class="col s12 line"></div>
+  </div>
+
+  <div class="row" style="margin-bottom: 0px;">
+    <h6>Please fill the details ( as per Driver's Licence Card ) below:</h6>
+  </div>
+
+  <div class="row">
+    <table class="col s12 bordered centered responsive-table">
+      <thead>
+        <tr>
+            <th data-field="riderName"><i>Rider's Name</i></th>
+            <th data-field="riderMobile"><i>Rider's Mobile</i></th>
+            <th data-field="extraHelmet"><i>Need Extra Helmet</i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="input-field">
+              <label for="riderName"><i class="material-icons" style="font-size:24px;">account_circle</i> Rider's Name</label>
+              <input id="riderName" type="text" ng-model='rider.riderName' />
+            </div>
+          </td>
+          <td>
+            <div class="input-field">
+              <label for="riderMobile"><i class="material-icons"  style="font-size:24px;">phone</i> Rider's Mobile</label>
+              <input id="riderMobile" type="text" ng-model='rider.riderMobile'/>
+            </div>
+          </td>
+          <td>
+            <div class="switch">
+              <label ng-init="rider.extraHelmet = false">
+                Off
+                <input type="checkbox" ng-model="rider.extraHelmet">
+                <span class="lever"></span>
+                On
+              </label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <button type="submit" ng-click="bookFinal()" ng-disabled="isDisabled" class="btn right col s4" ng-class="isDisabled ? 'disabled' : '' ">Book My Ride</button>
+  </div>
+
+</div>
+<style media="screen">
+.input-field label.active{
+  font-size: 0.8em !important;
+  transform: translateY(-100%);
+}
+</style>
